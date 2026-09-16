@@ -1,0 +1,19 @@
+{
+  "name": "voisinator",
+  "version": "1.0.0",
+  "description": "Application de voisinage pour découvrir et publier des événements, activités ou services selon une ville, un code postal et un rayon choisi. API TypeScript et back-office.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
