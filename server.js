@@ -25,8 +25,7 @@ app.get("/product/:id", (req, res) => {
 });
 
 app.post("/product", (req, res) => {
-  const body = req.body;
-  const { id, name, price } = body;
+  const { id, name, price } = req.body;
   const response = productModel.createProduct(id, name, price);
   if (response) {
     res.sendStatus(201);
