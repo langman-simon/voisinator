@@ -1,16 +1,28 @@
-# React + Vite
+# conseil de la prof
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- composant général pour les écrans vides, on remonte le bouton au dessus du texte central;
 
-Currently, two official plugins are available:
+- utiliser
+  "Font Awesome" : https://docs.fontawesome.com/web/use-with/react-native;
+  ou
+  "React Native Vector Icons" : https://github.com/oblador/react-native-vector-icons;
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+pour les icônes génériques;
 
-## React Compiler
+- utiliser "react navigation" pour la barre de navigation;
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- DateTime Picker pour la gestion des dates;
 
-## Expanding the ESLint configuration
+- Garder les messages d'erreur et infobulles aux mêmes endroit pour la compatibilité des composants;
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Utiliser "Google fonts" pour gérer la typologie;
+
+- regarder le fonctionnement des "Kits UI" pour gérer correctement les composants de base, sinon on devra créer nos propres composants;
+
+- pour le capteur de locations on peux utiliser "Location" : https://docs.expo.dev/versions/latest/sdk/location/;
+
+- on autorise un seul ajout d'images par events, je laisse le bouton ajouter pour montrer ce qu'il y a sans;
+
+- pour la bio du profil, champ adaptatif;
+
+- remplacer l'affichage des astuces par autre chose car cela casse le display de la page et peut poser problème avec les composants, je propose de réutiliser le composant banner pour cela ou bien on ne met pas d'astuces;
