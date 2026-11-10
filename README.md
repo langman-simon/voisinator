@@ -26,3 +26,13 @@ pour les icônes génériques;
 - pour la bio du profil, champ adaptatif;
 
 - remplacer l'affichage des astuces par autre chose car cela casse le display de la page et peut poser problème avec les composants, je propose de réutiliser le composant banner pour cela ou bien on ne met pas d'astuces;
+
+# docker command and .env content
+
+docker run --name postgres -e POSTGRES_PASSWORD=mdp -e POSTGRES_USER=user -e POSTGRES_DB=postgres -p 3002:5432 -d postgres
+
+DB_USER=user
+DB_HOST=localhost
+DB_NAME=postgres
+DB_PASSWORD=mdp
+DB_PORT=3002
