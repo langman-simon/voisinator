@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS role (
 
 CREATE TABLE IF NOT EXISTS "user" (
     id INTEGER primary key generated always as identity,
-    RoleId INTEGER REFERENCES role (id) NOT NULL,
+    roleId INTEGER REFERENCES role (id) NOT NULL,
     pseudo VARCHAR(50) NOT NULL,
     firstName VARCHAR(50) NOT NULL,
     name VARCHAR(50) NOT NULL,
