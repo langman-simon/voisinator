@@ -36,3 +36,8 @@ DB_HOST=localhost
 DB_NAME=postgres
 DB_PASSWORD=mdp
 DB_PORT=3002
+
+# question prof
+
+- programmation orienté objet ou programmation fonctionnelle (requête)
+- structure git ?
