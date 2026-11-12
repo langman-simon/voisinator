@@ -2,12 +2,10 @@
 
 - composant général pour les écrans vides, on remonte le bouton au dessus du texte central;
 
-- utiliser
+- utiliser, pour les icônes génériques :
   "Font Awesome" : https://docs.fontawesome.com/web/use-with/react-native;
   ou
   "React Native Vector Icons" : https://github.com/oblador/react-native-vector-icons;
-
-pour les icônes génériques;
 
 - utiliser "react navigation" pour la barre de navigation;
 
