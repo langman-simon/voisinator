@@ -1,8 +1,6 @@
 import * as userModel from "../models/user.js";
 
-// wiat for validation to be implemented.
-
-export const getUserById = async (req, res) => {
+const getUserById = async (req, res) => {
   const { id } = req.params;
   try {
     const user = await userModel.findUserById(req.app.locals.SQLClient, { id });
@@ -16,7 +14,7 @@ export const getUserById = async (req, res) => {
   }
 };
 
-export const deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
     const userExists = await userModel.userExists(req.app.locals.SQLClient, {
@@ -33,7 +31,7 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-export const updateUser = async (req, res) => {
+const patchUser = async (req, res) => {
   const { id } = req.params;
   const {
     roleId,
@@ -71,7 +69,7 @@ export const updateUser = async (req, res) => {
   }
 };
 
-export const createUser = async (req, res) => {
+const addUser = async (req, res) => {
   const {
     roleId,
     pseudo,
@@ -101,34 +99,4 @@ export const createUser = async (req, res) => {
   }
 };
 
-export const getUserByEmail = async (req, res) => {
-  const { email } = req.params;
-  try {
-    const user = await userModel.findUserByEmail(req.app.locals.SQLClient, {
-      email,
-    });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    return res.status(200).json(user);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-export const getUserByPseudo = async (req, res) => {
-  const { pseudo } = req.params;
-  try {
-    const user = await userModel.findUserByPseudo(req.app.locals.SQLClient, {
-      pseudo,
-    });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    return res.status(200).json(user);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
+export { getUserById, addUser, patchUser, deleteUser };

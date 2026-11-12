@@ -107,7 +107,7 @@ export const deleteUser = async (SQLClient, { id }) => {
 };
 
 /*this function checks if a user with the same pseudo or email already exists */
-export const sameUserData = async (SQLClient, { pseudo, email }) => {
+export const checkIfUserExist = async (SQLClient, { pseudo, email }) => {
   const { rows } = await SQLClient.query(
     "SELECT * FROM user WHERE pseudo = $1 OR email = $2",
     [pseudo, email],
