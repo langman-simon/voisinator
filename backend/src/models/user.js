@@ -14,4 +14,3 @@ export const updateUser = async (
 ) => {};
 
 export const deleteUser = async (SQLClient, { id }) => {};
-**//*
