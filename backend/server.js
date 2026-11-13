@@ -4,13 +4,6 @@ const app = express();
 const port = 3001;
 
 app.use(express.json());
-
-app.use((req, res, next) => {
-  req.pool = pool;
-  next();
-});
-
-app.use(express.json());
 app.use(Router);
 
 app.listen(port, () => {
