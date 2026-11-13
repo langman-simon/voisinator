@@ -10,14 +10,16 @@ http:
     type: json
     data: |-
       {
-            roleId:1,
-          pseudo:"japanLover",
-          firstName:"Ousmane",
-          name:"Dembélé",
-          email:"ousmane.dembele@hotmail.com",
-          password:"ekfken",
-          city,
-          searchRadiusKm,
+        "role_id": 1,
+        "pseudo": "japanLover",
+        "first_name": "Ousmane",
+        "name": "Dembélé",
+        "email": "ousmane.dembele@hotmail.com",
+        "password_hash": "ekfken",
+        "longitude": 51.545,
+        "latitude": 65.545,
+        "user_address": "rue du test bruno",
+        "search_radius_km": 22
       }
   auth: inherit
 

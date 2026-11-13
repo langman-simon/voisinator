@@ -3,30 +3,30 @@ import { pool } from "../database/db.js";
 
 const addUser = async (req, res) => {
   const {
-    roleId,
+    role_id,
     pseudo,
-    firstName,
+    first_name,
     name,
     email,
     password,
     latitude,
     longitude,
     user_address,
-    searchRadiusKm,
+    search_radius_km,
   } = req.body;
 
   try {
     const user = await userModel.createUser(pool, {
-      roleId,
+      role_id,
       pseudo,
-      firstName,
+      first_name,
       name,
       email,
       password,
       latitude,
       longitude,
       user_address,
-      searchRadiusKm,
+      search_radius_km,
     });
     return res.status(201).json(user);
   } catch (error) {
@@ -52,20 +52,20 @@ const getUser = async (req, res) => {
 const patchUser = async (req, res) => {
   const { id } = req.params;
   const {
-    roleId,
+    role_id,
     pseudo,
-    firstName,
+    first_name,
     name,
     email,
     password,
     latitude,
     longitude,
     user_address,
-    searchRadiusKm,
+    search_radius_km,
   } = req.body;
 
   try {
-    const userExists = await userModel.userExists(pool, {
+    const userExists = await userModel.checkIfUserExist(pool, {
       id,
     });
     if (!userExists) {
@@ -73,16 +73,16 @@ const patchUser = async (req, res) => {
     }
     await userModel.updateUser(pool, {
       id,
-      roleId,
+      role_id,
       pseudo,
-      firstName,
+      first_name,
       name,
       email,
       password,
       latitude,
       longitude,
       user_address,
-      searchRadiusKm,
+      search_radius_km,
     });
     return res.status(200).json({ message: "User updated successfully" });
   } catch (error) {
@@ -94,8 +94,7 @@ const patchUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
-    SQLClient = await pool.connect();
-    const userExists = await userModel.userExists(pool, {
+    const userExists = await userModel.checkIfUserExist(pool, {
       id,
     });
     if (!userExists) {
