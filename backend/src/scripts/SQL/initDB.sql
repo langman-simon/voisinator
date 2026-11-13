@@ -55,7 +55,7 @@ VALUES
         '5f4e5f4e5d',
         4.8675,
         50.4674,
-        "rue de la cachotiere",
+        'rue du code',
         23
     ),
     (
@@ -67,7 +67,7 @@ VALUES
         '5f4e5f4e5d',
         4.3517,
         50.8503,
-        "chaussee des carrioles",
+        'rue du code',
         10
     ),
     (
@@ -79,7 +79,7 @@ VALUES
         '5f4e5f4e5d',
         5.5797,
         50.6326,
-        "boulevard de la cara",
+        'rue du code',
         15
     ),
     (
@@ -91,7 +91,7 @@ VALUES
         '5f4e5f4e5d',
         4.8675,
         50.4674,
-        "rue de la pils",
+        'rue du code',
         5
     );
 
@@ -182,7 +182,7 @@ VALUES
         '2026-12-10 17:00:00',
         4.8675,
         50.4674,
-        "chaussee de louvain",
+        'rue du code',
         20,
         '/backend/src/assets/images/sport_icon.svg'
     ),
@@ -195,7 +195,7 @@ VALUES
         '2026-12-15 23:00:00',
         4.3517,
         50.8503,
-        "chaussee de louvain",
+        'rue du code',
         100,
         '/backend/src/assets/images/music_icon.svg'
     ),
@@ -208,7 +208,7 @@ VALUES
         '2026-12-20 20:00:00',
         5.5797,
         50.6326,
-        "chaussee de louvain",
+        'rue du code',
         50,
         '/backend/src/assets/images/food_icon.svg'
     );
