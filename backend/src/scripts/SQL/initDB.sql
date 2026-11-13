@@ -17,15 +17,16 @@ CREATE TABLE "user" (
     name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     password_hash VARCHAR(100) NOT NULL,
-    user_address VARCHAR(255) NOT NULL,
+    longitude VARCHAR(255) NOT NULL,
+    latitude VARCHAR(255) NOT NULL,
     search_radius_km INTEGER NOT NULL
 );
 
-INSERT INTO "user" (id, role_id, pseudo, first_name, name, email, password_hash, user_address, search_radius_km) VALUES
-(1, 1, 'UserPseudo', 'UserFirstName', 'UserName', 'user@example.com', '5f4e5f4e5d', '63, rue de la carambole', 23),
-(2, 2, 'adminPseudo', 'AdminFirstName', 'AdminName', 'admin@example.com', '5f4e5f4e5d', '63, rue de la carambole', 1),
-(3, 3, 'moderatorPseudo', 'ModeratorFirstName', 'ModeratorName', 'moderator@example.com', '5f4e5f4e5d', '63, rue de la carambole', 1),
-(4, 4, 'guestPseudo', 'GuestFirstName', 'GuestName', 'guest@example.com', '5f4e5f4e5d', '63, rue de la carambole', 5);
+INSERT INTO "user" (id, role_id, pseudo, first_name, name, email, password_hash, longitude, latitude, search_radius_km) VALUES
+(1, 1, 'UserPseudo', 'UserFirstName', 'UserName', 'user@example.com', '5f4e5f4e5d', "948563", "4445156", 23),
+(2, 2, 'adminPseudo', 'AdminFirstName', 'AdminName', 'admin@example.com', '5f4e5f4e5d', "548563", "5445156", 1),
+(3, 3, 'moderatorPseudo', 'ModeratorFirstName', 'ModeratorName', 'moderator@example.com', '5f4e5f4e5d', "548563", "5445156", 1),
+(4, 4, 'guestPseudo', 'GuestFirstName', 'GuestName', 'guest@example.com', '5f4e5f4e5d', "548563", "5445156", 5);
 
 CREATE TABLE category (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -51,15 +52,16 @@ CREATE TABLE publication (
     created_at DATE NOT NULL,
     event_start_at DATE NOT NULL,
     event_end_at DATE NOT NULL,
-    event_address VARCHAR(255) NOT NULL,
+    longitude VARCHAR(255) NOT NULL,
+    latitude VARCHAR(255) NOT NULL,
     max_participants INTEGER NOT NULL,
     cover_image VARCHAR(100) NOT NULL
 );
 
-INSERT INTO publication (user_id, category_id, title, description, created_at, event_start_at, event_end_at, max_participants, cover_image) VALUES
-(1, 1, 'Soccer Match', 'Join us for a friendly soccer match!', '2024-06-01', '2024-06-10', '2024-06-10', 20, 'https://example.com/soccer.jpg'),
-(2, 2, 'Live Concert', 'Experience an amazing live concert!', '2024-06-02', '2024-06-15', '2024-06-15', 100, 'https://example.com/concert.jpg'),
-(3, 3, 'Food Festival', 'Taste delicious food from around the world!', '2024-06-03', '2024-06-20', '2024-06-20', 50, 'https://example.com/food.jpg');
+INSERT INTO publication (user_id, category_id, title, description, created_at, event_start_at, event_end_at, longitude, latitude, max_participants, cover_image) VALUES
+(1, 1, 'Soccer Match', 'Join us for a friendly soccer match!', '2024-06-01', '2024-06-10', '2024-06-10', "948563", "4445156", 20, '/backend/src/assets/images/sport_icon.svg'),
+(2, 2, 'Live Concert', 'Experience an amazing live concert!', '2024-06-02', '2024-06-15', '2024-06-15', "948563", "4445156", 100, '/backend/src/assets/images/music_icon.svg'),
+(3, 3, 'Food Festival', 'Taste delicious food from around the world!', '2024-06-03', '2024-06-20', '2024-06-20', "948563", "4445156", 50, '/backend/src/assets/images/food_icon.svg');
 
 CREATE TABLE participation (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
