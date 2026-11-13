@@ -6,6 +6,7 @@ export const createPublication = async (
       "INSERT INTO publication (user_id, category_id, title, description, event_start_at, event_end_at, longitude, latitude, event_address, max_participants, cover_image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)",
       [userId, categoryId, title, description, eventStartAt, eventEndAt, longitude, latitude, eventAddress, maxParticipants, coverImage],
     );
+    return rows[0] ?? null;
 };
 
 export const updatePublication = async (
@@ -80,8 +81,13 @@ export const updatePublication = async (
   await SQLClient.query(query, values);
 };
 
+export const findPublicationById = async(SQLClient, {id}) => {
+    const { rows } = await SQLClient.query("SELECT * FROM publication WHERE id = $1", [id]);
+    return rows[0];
+};
+
 export const findPublicationsByTitle = async(SQLClient, {title}) => {
-    const { rows } = await SQLClient.query("SELECT * from publication WHERE title = $1", [title]);
+    const { rows } = await SQLClient.query("SELECT * FROM publication WHERE title = $1", [title]);
     return rows;
 }
 
@@ -90,7 +96,7 @@ export const findPublicationsByUserId = async(SQLClient, {userId}) => {
     return rows;
 }
 
-export const findPublicationsByCategory = async(SQLClient, {userId}) => {
+export const findPublicationsByCategory = async(SQLClient, {categoryId}) => {
     const { rows } = await SQLClient.query("SELECT * from publication WHERE category_id = $1", [categoryId]);
     return rows;
 }
