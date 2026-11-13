@@ -10,7 +10,12 @@ CREATE TABLE role (
     label VARCHAR(30) NOT NULL UNIQUE
 );
 
-INSERT INTO role (label) VALUES ('user'), ('admin'), ('moderator'), ('guest');
+INSERT INTO role (label)
+VALUES
+    ('user'),
+    ('admin'),
+    ('moderator'),
+    ('guest');
 
 
 CREATE TABLE "user" (
@@ -21,7 +26,6 @@ CREATE TABLE "user" (
     name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
-    city VARCHAR(100),
     longitude DOUBLE PRECISION NOT NULL,
     latitude DOUBLE PRECISION NOT NULL,
     search_radius_km INTEGER NOT NULL CHECK (search_radius_km >= 0),
@@ -35,7 +39,6 @@ INSERT INTO "user" (
     name,
     email,
     password_hash,
-    city,
     longitude,
     latitude,
     search_radius_km
@@ -48,7 +51,6 @@ VALUES
         'UserName',
         'user@example.com',
         '5f4e5f4e5d',
-        'Namur',
         4.8675,
         50.4674,
         23
@@ -60,7 +62,6 @@ VALUES
         'AdminName',
         'admin@example.com',
         '5f4e5f4e5d',
-        'Brussels',
         4.3517,
         50.8503,
         10
@@ -72,10 +73,20 @@ VALUES
         'ModeratorName',
         'moderator@example.com',
         '5f4e5f4e5d',
-        'Liege',
         5.5797,
         50.6326,
         15
+    ),
+    (
+        4,
+        'GuestPseudo',
+        'GuestFirstName',
+        'GuestName',
+        'guest@example.com',
+        '5f4e5f4e5d',
+        4.8675,
+        50.4674,
+        5
     );
 
 
@@ -117,7 +128,8 @@ VALUES
         '/backend/src/assets/images/technology_icon.svg',
         '#FF00FF'
     ),
-    ( 'Travel',
+    (
+        'Travel',
         '/backend/src/assets/images/travel_icon.svg',
         '#00FFFF'
     );
@@ -136,6 +148,7 @@ CREATE TABLE publication (
     latitude DOUBLE PRECISION NOT NULL,
     max_participants INTEGER NOT NULL CHECK (max_participants > 0),
     cover_image VARCHAR(255),
+
     CHECK (event_end_at >= event_start_at)
 );
 
@@ -195,6 +208,7 @@ CREATE TABLE participation (
     user_id INTEGER NOT NULL REFERENCES "user"(id),
     publication_id INTEGER NOT NULL REFERENCES publication(id),
     joined_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    
     UNIQUE (user_id, publication_id)
 );
 
