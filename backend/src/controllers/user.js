@@ -9,7 +9,9 @@ const addUser = async (req, res) => {
     name,
     email,
     password,
-    city,
+    latitude,
+    longitude,
+    user_address,
     searchRadiusKm,
   } = req.body;
 
@@ -21,7 +23,9 @@ const addUser = async (req, res) => {
       name,
       email,
       password,
-      city,
+      latitude,
+      longitude,
+      user_address,
       searchRadiusKm,
     });
     return res.status(201).json(user);
@@ -54,7 +58,9 @@ const patchUser = async (req, res) => {
     name,
     email,
     password,
-    city,
+    latitude,
+    longitude,
+    user_address,
     searchRadiusKm,
   } = req.body;
 
@@ -73,7 +79,9 @@ const patchUser = async (req, res) => {
       name,
       email,
       password,
-      city,
+      latitude,
+      longitude,
+      user_address,
       searchRadiusKm,
     });
     return res.status(200).json({ message: "User updated successfully" });

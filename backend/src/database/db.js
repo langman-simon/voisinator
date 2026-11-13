@@ -7,7 +7,7 @@ const pgPool = new pg.Pool({
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
   port: Number(process.env.DB_PORT),
-  max: 10 /*just for example*/,
+  max: 10,
 });
 
 export const pool = {
@@ -44,7 +44,3 @@ export const pool = {
     return pgPool.end();
   },
 };
-
-process.on("exit", () => {
-  pgPool.end().then(() => console.log("pool closed"));
-});

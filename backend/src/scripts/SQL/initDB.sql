@@ -28,8 +28,9 @@ CREATE TABLE "user" (
     password_hash VARCHAR(255) NOT NULL,
     longitude DOUBLE PRECISION NOT NULL,
     latitude DOUBLE PRECISION NOT NULL,
+    user_address VARCHAR(255) NOT NULL,
     search_radius_km INTEGER NOT NULL CHECK (search_radius_km >= 0),
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 INSERT INTO "user" (
@@ -41,6 +42,7 @@ INSERT INTO "user" (
     password_hash,
     longitude,
     latitude,
+    user_address,
     search_radius_km
 )
 VALUES
@@ -53,6 +55,7 @@ VALUES
         '5f4e5f4e5d',
         4.8675,
         50.4674,
+        "rue de la cachotiere",
         23
     ),
     (
@@ -64,6 +67,7 @@ VALUES
         '5f4e5f4e5d',
         4.3517,
         50.8503,
+        "chaussee des carrioles",
         10
     ),
     (
@@ -75,6 +79,7 @@ VALUES
         '5f4e5f4e5d',
         5.5797,
         50.6326,
+        "boulevard de la cara",
         15
     ),
     (
@@ -86,6 +91,7 @@ VALUES
         '5f4e5f4e5d',
         4.8675,
         50.4674,
+        "rue de la pils",
         5
     );
 
@@ -140,12 +146,13 @@ CREATE TABLE publication (
     user_id INTEGER NOT NULL REFERENCES "user"(id),
     category_id INTEGER NOT NULL REFERENCES category(id),
     title VARCHAR(100) NOT NULL,
-    description TEXT NOT NULL,
+    description TEXT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     event_start_at TIMESTAMP NOT NULL,
     event_end_at TIMESTAMP NOT NULL,
     longitude DOUBLE PRECISION NOT NULL,
     latitude DOUBLE PRECISION NOT NULL,
+    event_address VARCHAR(255) NOT NULL,
     max_participants INTEGER NOT NULL CHECK (max_participants > 0),
     cover_image VARCHAR(255),
 
@@ -161,6 +168,7 @@ INSERT INTO publication (
     event_end_at,
     longitude,
     latitude,
+    event_address,
     max_participants,
     cover_image
 )
@@ -174,6 +182,7 @@ VALUES
         '2026-12-10 17:00:00',
         4.8675,
         50.4674,
+        "chaussee de louvain",
         20,
         '/backend/src/assets/images/sport_icon.svg'
     ),
@@ -186,6 +195,7 @@ VALUES
         '2026-12-15 23:00:00',
         4.3517,
         50.8503,
+        "chaussee de louvain",
         100,
         '/backend/src/assets/images/music_icon.svg'
     ),
@@ -198,6 +208,7 @@ VALUES
         '2026-12-20 20:00:00',
         5.5797,
         50.6326,
+        "chaussee de louvain",
         50,
         '/backend/src/assets/images/food_icon.svg'
     );
