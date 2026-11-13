@@ -12,3 +12,5 @@ router.get("/:id", getUserById);
 router.post("/", addUser);
 router.patch("/id", patchUser);
 router.delete("/:id", deleteUser);
+
+export default router;
