@@ -1,15 +1,23 @@
 import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { pool } from "../../database/db.js";
 
-process.on("exit", () => {
-  pgPool.end().then(() => console.log("pool closed"));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const sqlPath = join(__dirname, "../SQL/initDB.sql");
+
+const requests = readFileSync(sqlPath, {
+  encoding: "utf-8",
 });
 
-const requests = readFileSync("../SQL/initDB.sql", { encoding: "utf-8" });
-
 try {
-  await pool.query(requests, []);
-  console.log("done");
-} catch (e) {
-  console.error(e);
+  await pool.query(requests);
+  console.log("Database initialized");
+} catch (error) {
+  console.error(error);
+} finally {
+  await pool.end();
+  console.log("Pool closed");
 }

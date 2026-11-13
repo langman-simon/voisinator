@@ -3,11 +3,11 @@ CREATE TABLE role (
     label VARCHAR(30)
 );
 
-INSERT INTO role (id, label) VALUES
-(1, 'user'),
-(2, 'admin'),
-(3, 'moderator'),
-(4, 'guest');
+INSERT INTO role (label) VALUES
+('user'),
+('admin'),
+('moderator'),
+('guest');
 
 CREATE TABLE "user" (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -34,13 +34,13 @@ CREATE TABLE category (
     color VARCHAR(7) NOT NULL
 );
 
-INSERT INTO category (id, label, icon, color) VALUES
-(1, 'Sport', '/backend/src/assets/images/sport_icon.svg', '#FF0000'),
-(2, 'Music', '/backend/src/assets/images/music_icon.svg', '#00FF00'),
-(3, 'Food', '/backend/src/assets/images/food_icon.svg', '#0000FF'),
-(4, 'Art', '/backend/src/assets/images/art_icon.svg', '#FFFF00'),
-(5, 'Technology', '/backend/src/assets/images/technology_icon.svg', '#FF00FF'),
-(6, 'Travel', '/backend/src/assets/images/travel_icon.svg', '#00FFFF');
+INSERT INTO category (label, icon, color) VALUES
+('Sport', '/backend/src/assets/images/sport_icon.svg', '#FF0000'),
+('Music', '/backend/src/assets/images/music_icon.svg', '#00FF00'),
+('Food', '/backend/src/assets/images/food_icon.svg', '#0000FF'),
+('Art', '/backend/src/assets/images/art_icon.svg', '#FFFF00'),
+('Technology', '/backend/src/assets/images/technology_icon.svg', '#FF00FF'),
+('Travel', '/backend/src/assets/images/travel_icon.svg', '#00FFFF');
 
 CREATE TABLE publication (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -56,10 +56,10 @@ CREATE TABLE publication (
     cover_image VARCHAR(100) NOT NULL
 );
 
-INSERT INTO publication (id, user_id, category_id, title, description, created_at, event_start_at, event_end_at, max_participants, cover_image) VALUES
-(1, 1, 1, 'Soccer Match', 'Join us for a friendly soccer match!', '2024-06-01', '2024-06-10', '2024-06-10', 20, 'https://example.com/soccer.jpg'),
-(2, 2, 2, 'Live Concert', 'Experience an amazing live concert!', '2024-06-02', '2024-06-15', '2024-06-15', 100, 'https://example.com/concert.jpg'),
-(3, 3, 3, 'Food Festival', 'Taste delicious food from around the world!', '2024-06-03', '2024-06-20', '2024-06-20', 50, 'https://example.com/food.jpg');
+INSERT INTO publication (user_id, category_id, title, description, created_at, event_start_at, event_end_at, max_participants, cover_image) VALUES
+(1, 1, 'Soccer Match', 'Join us for a friendly soccer match!', '2024-06-01', '2024-06-10', '2024-06-10', 20, 'https://example.com/soccer.jpg'),
+(2, 2, 'Live Concert', 'Experience an amazing live concert!', '2024-06-02', '2024-06-15', '2024-06-15', 100, 'https://example.com/concert.jpg'),
+(3, 3, 'Food Festival', 'Taste delicious food from around the world!', '2024-06-03', '2024-06-20', '2024-06-20', 50, 'https://example.com/food.jpg');
 
 CREATE TABLE participation (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -68,7 +68,7 @@ CREATE TABLE participation (
     joined_at DATE NOT NULL
 );
 
-INSERT INTO participation (id, user_id, publication_id, joined_at) VALUES
-(1, 1, 1, '2024-06-05'),
-(2, 2, 2, '2024-06-10'),
-(3, 3, 3, '2024-06-15');
+INSERT INTO participation (user_id, publication_id, joined_at) VALUES
+(1, 1, '2024-06-05'),
+(2, 2, '2024-06-10'),
+(3, 3, '2024-06-15');
