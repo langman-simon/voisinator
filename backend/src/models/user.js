@@ -2,7 +2,7 @@ export const createUser = async (
   SQLClient,
   { roleId, pseudo, firstName, name, email, password, city, searchRadiusKm },
 ) => {
-  if (sameUserData(SQLClient, { pseudo, email })) {
+  if (checkIfUserExist(SQLClient, { email })) {
     throw new Error("User with this pseudo or email already exists"); // throw Error or there is another way to handle this?
   } else {
     SQLClient.query(
@@ -12,27 +12,12 @@ export const createUser = async (
   }
 };
 
-export const findUserById = async (SQLClient, { id }) => {
-  const { rows } = await SQLClient.query("SELECT * FROM user WHERE id = $1", [
-    id,
-  ]);
-  return rows[0];
-};
-
-export const findUserByEmail = async (SQLClient, { email }) => {
+export const readUserById = async (SQLClient, { id }) => {
   const { rows } = await SQLClient.query(
-    "SELECT * FROM user WHERE email = $1",
-    [email],
+    "SELECT * FROM user WHERE id = $1 VALUES ",
+    [id],
   );
-  return rows[0];
-};
-
-export const findUserByPseudo = async (SQLClient, { pseudo }) => {
-  const { rows } = await SQLClient.query(
-    "SELECT * FROM user WHERE pseudo = $1",
-    [pseudo],
-  );
-  return rows[0];
+  return rows;
 };
 
 export const updateUser = async (
@@ -104,10 +89,10 @@ export const deleteUser = async (SQLClient, { id }) => {
   return rowCount > 0;
 };
 
-export const checkIfUserExist = async (SQLClient, { pseudo, email }) => {
+export const checkIfUserExist = async (SQLClient, { email }) => {
   const { rows } = await SQLClient.query(
-    "SELECT * FROM user WHERE pseudo = $1 OR email = $2",
-    [pseudo, email],
+    "SELECT * FROM user WHERE email = $1",
+    [email],
   );
   return rows.length > 0;
 };
