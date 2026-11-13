@@ -1,9 +1,10 @@
 import * as userModel from "../models/user.js";
+import { pool } from "../database/db.js";
 
-const getUserById = async (req, res) => {
+const getUser = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await userModel.findUserById(req.app.locals.SQLClient, { id });
+    const user = await userModel.findUserById(pool, { id });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -17,13 +18,14 @@ const getUserById = async (req, res) => {
 const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
-    const userExists = await userModel.userExists(req.app.locals.SQLClient, {
+    SQLClient = await pool.connect();
+    const userExists = await userModel.userExists(pool, {
       id,
     });
     if (!userExists) {
       return res.status(404).json({ message: "User not found" });
     }
-    await userModel.deleteUser(req.app.locals.SQLClient, { id });
+    await userModel.deleteUser(pool, { id });
     return res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     console.error(error);
@@ -45,13 +47,13 @@ const patchUser = async (req, res) => {
   } = req.body;
 
   try {
-    const userExists = await userModel.userExists(req.app.locals.SQLClient, {
+    const userExists = await userModel.userExists(pool, {
       id,
     });
     if (!userExists) {
       return res.status(404).json({ message: "User not found" });
     }
-    await userModel.updateUser(req.app.locals.SQLClient, {
+    await userModel.updateUser(pool, {
       id,
       roleId,
       pseudo,
@@ -82,7 +84,7 @@ const addUser = async (req, res) => {
   } = req.body;
 
   try {
-    const user = await userModel.createUser(req.app.locals.SQLClient, {
+    const user = await userModel.createUser(pool, {
       roleId,
       pseudo,
       firstName,
@@ -99,4 +101,4 @@ const addUser = async (req, res) => {
   }
 };
 
-export { getUserById, addUser, patchUser, deleteUser };
+export { getUser, addUser, patchUser, deleteUser };

@@ -35,7 +35,6 @@ export const findUserByPseudo = async (SQLClient, { pseudo }) => {
   return rows[0];
 };
 
-//update only the fields that are not null or undefined, if a field is null or undefined, it will not be updated
 export const updateUser = async (
   SQLClient,
   {
@@ -98,7 +97,6 @@ export const updateUser = async (
   await SQLClient.query(query, values);
 };
 
-// delete only existing user by id, if the user does not exist, it will not throw an error
 export const deleteUser = async (SQLClient, { id }) => {
   const { rowCount } = await SQLClient.query("DELETE FROM user WHERE id = $1", [
     id,
@@ -106,7 +104,6 @@ export const deleteUser = async (SQLClient, { id }) => {
   return rowCount > 0;
 };
 
-/*this function checks if a user with the same pseudo or email already exists */
 export const checkIfUserExist = async (SQLClient, { pseudo, email }) => {
   const { rows } = await SQLClient.query(
     "SELECT * FROM user WHERE pseudo = $1 OR email = $2",
