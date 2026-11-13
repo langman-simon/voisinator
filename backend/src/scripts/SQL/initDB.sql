@@ -43,12 +43,12 @@ CREATE TABLE category (
 );
 
 INSERT INTO category (id, label, icon, color) VALUES
-(1, 'Sport', 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png', '#FF0000'),
-(2, 'Music', 'https://cdn-icons-png.flaticon.com/512/727/727218.png', '#00FF00'),
-(3, 'Food', 'https://cdn-icons-png.flaticon.com/512/1046/1046784.png', '#0000FF'),
-(4, 'Art', 'https://cdn-icons-png.flaticon.com/512/1055/1055646.png', '#FFFF00'),
-(5, 'Technology', 'https://cdn-icons-png.flaticon.com/512/1055/1055646.png', '#FF00FF'),
-(6, 'Travel', 'https://cdn-icons-png.flaticon.com/512/1046/1046784.png', '#00FFFF');
+(1, 'Sport', '/backend/src/assets/images/sport_icon.svg', '#FF0000'),
+(2, 'Music', '/backend/src/assets/images/music_icon.svg', '#00FF00'),
+(3, 'Food', '/backend/src/assets/images/food_icon.svg', '#0000FF'),
+(4, 'Art', '/backend/src/assets/images/art_icon.svg', '#FFFF00'),
+(5, 'Technology', '/backend/src/assets/images/technology_icon.svg', '#FF00FF'),
+(6, 'Travel', '/backend/src/assets/images/travel_icon.svg', '#00FFFF');
 
 CREATE TABLE publication (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
