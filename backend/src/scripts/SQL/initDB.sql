@@ -1,11 +1,3 @@
-/*
-DROP TABLE IF EXISTS role;
-DROP TABLE IF EXISTS "user";
-DROP TABLE IF EXISTS category;
-DROP TABLE IF EXISTS publication;
-DROP TABLE IF EXISTS participation;
-*/
-
 CREATE TABLE role (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     label VARCHAR(30)
@@ -25,15 +17,15 @@ CREATE TABLE "user" (
     name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     password_hash VARCHAR(100) NOT NULL,
-    city VARCHAR(100) NOT NULL,
+    user_address VARCHAR(255) NOT NULL,
     search_radius_km INTEGER NOT NULL
 );
 
-INSERT INTO "user" (id, role_id, pseudo, first_name, name, email, password_hash, city, search_radius_km) VALUES
-(1, 1, 'UserPseudo', 'UserFirstName', 'UserName', 'user@example.com', '5f4e5f4e5d', 'Toronto', 23),
-(2, 2, 'adminPseudo', 'AdminFirstName', 'AdminName', 'admin@example.com', '5f4e5f4e5d', 'Bruxelles', 1),
-(3, 3, 'moderatorPseudo', 'ModeratorFirstName', 'ModeratorName', 'moderator@example.com', '5f4e5f4e5d', 'Malines', 1),
-(4, 4, 'guestPseudo', 'GuestFirstName', 'GuestName', 'guest@example.com', '5f4e5f4e5d', 'Gent', 5);
+INSERT INTO "user" (id, role_id, pseudo, first_name, name, email, password_hash, user_address, search_radius_km) VALUES
+(1, 1, 'UserPseudo', 'UserFirstName', 'UserName', 'user@example.com', '5f4e5f4e5d', '63, rue de la carambole', 23),
+(2, 2, 'adminPseudo', 'AdminFirstName', 'AdminName', 'admin@example.com', '5f4e5f4e5d', '63, rue de la carambole', 1),
+(3, 3, 'moderatorPseudo', 'ModeratorFirstName', 'ModeratorName', 'moderator@example.com', '5f4e5f4e5d', '63, rue de la carambole', 1),
+(4, 4, 'guestPseudo', 'GuestFirstName', 'GuestName', 'guest@example.com', '5f4e5f4e5d', '63, rue de la carambole', 5);
 
 CREATE TABLE category (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
