@@ -84,9 +84,3 @@ INSERT INTO participation (id, userId, publicationId, joinedAt) VALUES
 (2, 2, 2, '2024-06-10'),
 (3, 3, 3, '2024-06-15')
 ON CONFLICT (id) DO NOTHING;
-
-SELECT setval(pg_get_serial_sequence('role', 'id'), (SELECT MAX(id) FROM role));
-SELECT setval(pg_get_serial_sequence('"user"', 'id'), (SELECT MAX(id) FROM "user"));
-SELECT setval(pg_get_serial_sequence('category', 'id'), (SELECT MAX(id) FROM category));
-SELECT setval(pg_get_serial_sequence('publication', 'id'), (SELECT MAX(id) FROM publication));
-SELECT setval(pg_get_serial_sequence('participation', 'id'), (SELECT MAX(id) FROM participation));
