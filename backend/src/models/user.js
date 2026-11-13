@@ -14,7 +14,7 @@ export const createUser = async (
   },
 ) => {
   if (await checkIfUserExist(SQLClient, { email })) {
-    throw new Error("User with this pseudo or email already exists");
+    throw new Error("User with this email already exists");
   } else {
     SQLClient.query(
       `INSERT INTO "user" (role_id, pseudo, first_name, name, email, password_hash, longitude, latitude, user_address, search_radius_km) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,

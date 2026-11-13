@@ -16,7 +16,7 @@ const addUser = async (req, res) => {
   } = req.body;
 
   try {
-    const user = await userModel.createUser(pool, {
+    await userModel.createUser(pool, {
       role_id,
       pseudo,
       first_name,
@@ -28,7 +28,7 @@ const addUser = async (req, res) => {
       user_address,
       search_radius_km,
     });
-    return res.status(201).json(user);
+    return res.status(201);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
