@@ -1,0 +1,5 @@
+name: dev
+variables:
+  - name: userPath
+    value: http://localhost:3001/user
+    description: ""
