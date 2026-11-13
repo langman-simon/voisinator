@@ -39,3 +39,7 @@ DB_PORT=3002
 
 - programmation orienté objet ou programmation fonctionnelle (requête)
 - structure git ?
+
+use it for date formats
+<input type="datetime-local" ref={startDateRef} />
+<input type="datetime-local" ref={endDateRef} />
