@@ -11,6 +11,27 @@ const pgPool = new pg.Pool({
 });
 
 export const pool = {
+  connect: async () => {
+    try {
+      const client = await pgPool.connect();
+      return {
+        query: async (query, params) => {
+          try {
+            return await client.query(query, params);
+          } catch (e) {
+            console.error(e);
+            throw e;
+          }
+        },
+        release: () => {
+          return client.release();
+        },
+      };
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  },
   query: async (query, params) => {
     try {
       return await pgPool.query(query, params);
@@ -23,3 +44,7 @@ export const pool = {
     return pgPool.end();
   },
 };
+
+process.on("exit", () => {
+  pgPool.end().then(() => console.log("pool closed"));
+});
