@@ -5,6 +5,7 @@ export const getAllCategories = async (req, res) => {
     const categories = await CategoryModel.readCategories(req.pool);
     res.status(200).json(categories);
   } catch (error) {
+    console.error("Error PostgreSQL:", error);
     res.status(500).json({ error: "Failed to fetch categories" });
   }
 };

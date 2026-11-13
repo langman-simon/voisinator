@@ -31,3 +31,5 @@ async function initDB() {
 process.on("exit", () => {
   pgPool.end().then(() => console.log("pool closed"));
 });
+
+export default pool;
