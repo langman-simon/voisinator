@@ -59,6 +59,7 @@ CREATE TABLE publication (
     created_at DATE NOT NULL,
     event_start_at DATE NOT NULL,
     event_end_at DATE NOT NULL,
+    event_address VARCHAR(255) NOT NULL,
     max_participants INTEGER NOT NULL,
     cover_image VARCHAR(100) NOT NULL
 );
