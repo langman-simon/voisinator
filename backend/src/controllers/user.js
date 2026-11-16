@@ -13,7 +13,7 @@ const addUser = async (req, res) => {
     longitude,
     user_address,
     search_radius_km,
-  } = req.body;
+  } = req.val;
 
   try {
     await userModel.createUser(pool, {
