@@ -21,7 +21,7 @@ router.get("/:title",validate(titleValidator), findPublicationsByTitle);
 router.get("/:latitude/:longitude/:kmRadius", findPublicationsByRadius);
 router.get("/:userId",validate(idValidator, "params"), findPublicationByUserId);
 router.post("/",validate(createPublicationValidator, "body"),addPublication);
-router.patch("/id",validate(idUserValidator),validate(patchPublicationValidator, "body"), patchPublication);
+router.patch("/id",validate(idValidator),validate(patchPublicationValidator, "body"), patchPublication);
 router.delete("/:id",validate(idValidator, "params"), deletePublication);
 
 export default router;
