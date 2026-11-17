@@ -46,10 +46,7 @@ const addPublication = async (req, res) => {
 };
 
 const patchPublication = async (req, res) => {
-  const id = Number(req.params.id);
-  /*We never know what can happens..*/
-  if(!Number.isInteger(id) || id <= 0) return res.status(400).json({message: "Identifiant invalide"});
-
+  const id = req.params.id;
   const {
     categoryId,
     title,
@@ -105,10 +102,7 @@ const patchPublication = async (req, res) => {
 };
 
 const deletePublication = async (req, res) => {
-  /*Same as patch*/
-  const id  = Number(req.params.id);
-  if(!Number.isInteger(id) || id <= 0) return res.status(400).json({message: "Identifiant invalide"});
-
+  const id  = req.params.id;
   try {
     const publication = await publicationModel.findPublicationById(pool, {
       id,
@@ -126,10 +120,7 @@ const deletePublication = async (req, res) => {
 };
 
 const findPublicationById = async(req, res) => {
-  /*Same as patch*/
-  const id  = Number(req.params.id);
-  if(!Number.isInteger(id) || id <= 0) return res.status(400).json({message: "Identifiant invalide"});
-  
+  const id  = req.params.id;
   try{
     const publication = await publicationModel.findPublicationById(pool, {id});
     if(!publication) return res.status(404).json({message: "Publication introuvable"});
@@ -153,10 +144,7 @@ const findPublicationsByTitle = async(req, res) => {
 }
 
 const findPublicationByUserId = async(req, res) => {
-  /*Same as patch*/
-  const userId  = Number(req.params.userId);
-  if(!Number.isInteger(userId) || userId <= 0) return res.status(400).json({message: "Identifiant invalide"});
-  
+  const userId  = req.params.userId;
   try{
     const publication = await publicationModel.findPublicationsByUserId(pool, {userId});
     if(!publication) return res.status(404).json({message: "Publication introuvable"});
@@ -168,10 +156,7 @@ const findPublicationByUserId = async(req, res) => {
 }
 
 const findPublicationByCategoryId = async(req, res) => {
-  /*Same as patch*/
-  const categoryId  = Number(req.params.categoryId);
-  if(!Number.isInteger(categoryId) || categoryId <= 0) return res.status(400).json({message: "Identifiant invalide"});
-  
+  const categoryId  = req.params.categoryId;
   try{
     const publication = await publicationModel.findPublicationByCategoryId(pool, {categoryId});
     if(!publication) return res.status(404).json({message: "Publication introuvable"});
