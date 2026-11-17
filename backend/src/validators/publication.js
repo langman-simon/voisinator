@@ -9,7 +9,7 @@ const createPublicationValidator = vine.create({
   eventEndAt: vine.date({formats: ['iso8601']}),
   eventAddress: vine.string().trim().maxLength(255),
   maxParticipants: vine.number().withoutDecimals().positive().min(1),
-  coverImage: vine.nativeFile()
+  coverImage: vine.nativeFile().maxSize(1024 * 1024).mimeTypes(['image/png', 'image/jpeg'])
 });
 
 const patchPublicationValidator = vine.create({
@@ -21,7 +21,7 @@ const patchPublicationValidator = vine.create({
   eventEndAt: vine.date({formats: ['iso8601']}).optional(),
   eventAddress: vine.string().trim().maxLength(255).optional(),
   maxParticipants: vine.number().withoutDecimals().positive().min(1).optional(),
-  coverImage: vine.nativeFile().optional()
+  coverImage: vine.nativeFile().maxSize(1024 * 1024).mimeTypes(['image/png', 'image/jpeg']).optional()
 });
 
 const titleValidator = vine.create({
