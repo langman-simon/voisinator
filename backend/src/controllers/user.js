@@ -36,7 +36,7 @@ const addUser = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.val.id;
   try {
     const user = await userModel.readUserById(pool, { id });
     if (!user) {
@@ -50,7 +50,7 @@ const getUser = async (req, res) => {
 };
 
 const patchUser = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.val.id;
   const {
     role_id,
     pseudo,
@@ -62,7 +62,7 @@ const patchUser = async (req, res) => {
     longitude,
     user_address,
     search_radius_km,
-  } = req.body;
+  } = req.val;
 
   try {
     const userExists = await userModel.checkIfUserExist(pool, {
@@ -92,7 +92,7 @@ const patchUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.val.id;
   try {
     const userExists = await userModel.checkIfUserExist(pool, {
       id,

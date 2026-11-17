@@ -1,15 +1,11 @@
 import vine from "@vinejs/vine";
 
-const idUserValidator = vine.create({
-  id: vine.number().withoutDecimals().positive(),
-});
-
 const createUserValidator = vine.create({
   role_id: vine.number().withoutDecimals().positive(),
   pseudo: vine.string().trim().maxLength(50).ascii(),
   first_name: vine.string().trim().maxLength(50),
   name: vine.string().trim().maxLength(50),
-  email: vine.email().maxLength(100),
+  email: vine.string().email().maxLength(100),
   password: vine
     .string()
     .trim()
@@ -27,6 +23,7 @@ const patchUserValidator = vine.create({
   pseudo: vine.string().trim().maxLength(50).ascii(),
   first_name: vine.string().trim().maxLength(50),
   name: vine.string().trim().maxLength(50),
+  email: vine.string().email().maxLength(100),
   password: vine
     .string()
     .trim()
