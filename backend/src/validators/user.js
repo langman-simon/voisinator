@@ -1,9 +1,5 @@
 import vine from "@vinejs/vine";
 
-const idUserValidator = vine.create({
-  id: vine.number().withoutDecimals().positive(),
-});
-
 const createUserValidator = vine.create({
   role_id: vine.number().withoutDecimals().positive(),
   pseudo: vine.string().trim().maxLength(50).ascii(),
