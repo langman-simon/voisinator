@@ -45,7 +45,7 @@ export const updateCategory = async (req, res) => {
 
     const category = await CategoryModel.updateCategory(
       req.pool,
-      req.params.id,
+      req.val.id,
       label,
       icon,
       color,
@@ -61,7 +61,7 @@ export const updateCategory = async (req, res) => {
 
 export const deleteCategory = async (req, res) => {
   try {
-    const result = await CategoryModel.deleteCategory(req.pool, req.params.id);
+    const result = await CategoryModel.deleteCategory(req.pool, req.val.id);
 
     if (result.rowCount === 0) {
       return res.status(404).json({ error: "Category not found" });

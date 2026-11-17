@@ -20,10 +20,38 @@ export const createCategory = async (SQLClient, label, icon, color) => {
 };
 
 export const updateCategory = async (SQLClient, id, label, icon, color) => {
-  const { rows } = await SQLClient.query(
-    "UPDATE category SET label = $1, icon = $2, color = $3 WHERE id = $4 RETURNING *",
-    [label, icon, color, id],
-  );
+  const fieldsToUpdate = [];
+  const values = [];
+
+  if (label !== undefined && label !== null) {
+    values.push(label);
+    fieldsToUpdate.push(`label = $${values.length}`);
+  }
+
+  if (icon !== undefined && icon !== null) {
+    values.push(icon);
+    fieldsToUpdate.push(`icon = $${values.length}`);
+  }
+
+  if (color !== undefined && color !== null) {
+    values.push(color);
+    fieldsToUpdate.push(`color = $${values.length}`);
+  }
+
+  if (fieldsToUpdate.length === 0) {
+    throw new Error("No fields to update");
+  }
+
+  values.push(id);
+
+  const query = `
+  UPDATE category
+  SET ${fieldsToUpdate.join(", ")}
+  WHERE id = $${values.length}
+  RETURNING *
+  `;
+
+  const { rows } = await SQLClient.query(query, values);
   return rows[0];
 };
 

@@ -5,7 +5,7 @@ const createRoleSchema = vine.create({
 });
 
 const patchRoleSchema = vine.create({
-  label: vine.string().trim().maxLength(30).optional(),
+  label: vine.string().trim().maxLength(30),
 });
 
 export { createRoleSchema, patchRoleSchema };

@@ -11,7 +11,7 @@ export const getAllRoles = async (req, res) => {
 
 export const getRole = async (req, res) => {
   try {
-    const role = await RoleModel.readRole(req.pool, req.params.id);
+    const role = await RoleModel.readRole(req.pool, req.val.id);
     if (!role) {
       return res.status(404).json({ error: "Role not found" });
     }
@@ -23,13 +23,9 @@ export const getRole = async (req, res) => {
 
 export const createRole = async (req, res) => {
   try {
-    const { label } = req.body;
+    const { label } = req.val;
 
-    if (!typeof label === "string" || !label.trim()) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
-
-    const role = await RoleModel.createRole(req.pool, label.trim());
+    const role = await RoleModel.createRole(req.pool, label);
     res.status(201).json(role);
   } catch (error) {
     res.status(500);
@@ -38,17 +34,10 @@ export const createRole = async (req, res) => {
 
 export const updateRole = async (req, res) => {
   try {
-    const { label } = req.body;
+    const { label } = req.val;
 
-    if (!typeof label === "string" || !label.trim()) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
+    const role = await RoleModel.updateRole(req.pool, req.val.id, label);
 
-    const role = await RoleModel.updateRole(
-      req.pool,
-      req.params.id,
-      label.trim(),
-    );
     if (!role) {
       return res.status(404).json({ error: "Role not found" });
     }
@@ -60,7 +49,7 @@ export const updateRole = async (req, res) => {
 
 export const deleteRole = async (req, res) => {
   try {
-    const result = await RoleModel.deleteRole(req.pool, req.params.id);
+    const result = await RoleModel.deleteRole(req.pool, req.val.id);
     if (result.rowCount === 0) {
       return res.status(404).json({ error: "Role not found" });
     }
