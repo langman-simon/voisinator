@@ -12,7 +12,8 @@ export const getAllCategories = async (req, res) => {
 
 export const getCategory = async (req, res) => {
   try {
-    const category = await CategoryModel.readCategory(req.pool, req.params.id);
+    const category = await CategoryModel.readCategory(req.pool, req.val.id);
+
     if (!category) {
       return res.status(404).json({ error: "Category not found" });
     }
@@ -24,11 +25,7 @@ export const getCategory = async (req, res) => {
 
 export const createCategory = async (req, res) => {
   try {
-    const { label, icon, color } = req.body;
-
-    if (!label || !icon || !color) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
+    const { label, icon, color } = req.val;
 
     const category = await CategoryModel.createCategory(
       req.pool,
@@ -44,11 +41,7 @@ export const createCategory = async (req, res) => {
 
 export const updateCategory = async (req, res) => {
   try {
-    const { label, icon, color } = req.body;
-
-    if (!label || !icon || !color) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
+    const { label, icon, color } = req.val;
 
     const category = await CategoryModel.updateCategory(
       req.pool,
