@@ -1,0 +1,31 @@
+info:
+  name: create user 5
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{userPath}}/"
+  body:
+    type: json
+    data: |-
+      {
+        "role_id": 1,
+        "pseudo": "japanLover",
+        "first_name": "Ousmane",
+        "name": "Dembélé",
+        "email": "ousmane.dembele@hotmail.com",
+        "password_hash": "ekfken",
+        "longitude": 51.545,
+        "latitude": 65.545,
+        "user_address": "rue du test bruno",
+        "search_radius_km": 22
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

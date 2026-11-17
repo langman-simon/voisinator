@@ -1,113 +1,130 @@
 export const createUser = async (
   SQLClient,
-  { roleId, pseudo, firstName, name, email, password, city, searchRadiusKm },
+  {
+    role_id,
+    pseudo,
+    first_name,
+    name,
+    email,
+    password,
+    longitude,
+    latitude,
+    user_address,
+    search_radius_km,
+  },
 ) => {
-  if (sameUserData(SQLClient, { pseudo, email })) {
-    throw new Error("User with this pseudo or email already exists"); // throw Error or there is another way to handle this?
+  if (await checkIfUserExist(SQLClient, { email })) {
+    throw new Error("User with this email already exists");
   } else {
     SQLClient.query(
-      "INSERT INTO user (role_id, pseudo, first_name, name, email, password_hash, city, search_radius_km) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
-      [roleId, pseudo, firstName, name, email, password, city, searchRadiusKm],
+      `INSERT INTO "user" (role_id, pseudo, first_name, name, email, password_hash, longitude, latitude, user_address, search_radius_km) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+      [
+        role_id,
+        pseudo,
+        first_name,
+        name,
+        email,
+        password,
+        longitude,
+        latitude,
+        user_address,
+        search_radius_km,
+      ],
     );
   }
 };
 
-export const findUserById = async (SQLClient, { id }) => {
-  const { rows } = await SQLClient.query("SELECT * FROM user WHERE id = $1", [
+export const readUserById = async (SQLClient, { id }) => {
+  const { rows } = await SQLClient.query('SELECT * FROM "user" WHERE id = $1', [
     id,
   ]);
   return rows[0];
 };
 
-export const findUserByEmail = async (SQLClient, { email }) => {
-  const { rows } = await SQLClient.query(
-    "SELECT * FROM user WHERE email = $1",
-    [email],
-  );
-  return rows[0];
-};
-
-export const findUserByPseudo = async (SQLClient, { pseudo }) => {
-  const { rows } = await SQLClient.query(
-    "SELECT * FROM user WHERE pseudo = $1",
-    [pseudo],
-  );
-  return rows[0];
-};
-
 export const updateUser = async (
   SQLClient,
+  { id },
   {
-    id,
-    roleId,
+    role_id,
     pseudo,
-    firstName,
+    first_name,
     name,
     email,
     password,
-    city,
-    searchRadiusKm,
+    longitude,
+    latitude,
+    user_address,
+    search_radius_km,
   },
 ) => {
   const fieldsToUpdate = [];
   const values = [];
 
-  if (roleId !== undefined && roleId !== null) {
-    fieldsToUpdate.push("role_id = $1");
-    values.push(roleId);
+  if (role_id !== undefined && role_id !== null) {
+    values.push(role_id);
+    fieldsToUpdate.push(`role_id = $${values.length}`);
   }
   if (pseudo !== undefined && pseudo !== null) {
-    fieldsToUpdate.push(`pseudo = $${values.length + 1}`);
     values.push(pseudo);
+    fieldsToUpdate.push(`pseudo = $${values.length}`);
   }
-  if (firstName !== undefined && firstName !== null) {
-    fieldsToUpdate.push(`first_name = $${values.length + 1}`);
-    values.push(firstName);
+  if (first_name !== undefined && first_name !== null) {
+    values.push(first_name);
+    fieldsToUpdate.push(`first_name = $${values.length}`);
   }
   if (name !== undefined && name !== null) {
-    fieldsToUpdate.push(`name = $${values.length + 1}`);
     values.push(name);
+    fieldsToUpdate.push(`name = $${values.length}`);
   }
   if (email !== undefined && email !== null) {
-    fieldsToUpdate.push(`email = $${values.length + 1}`);
     values.push(email);
+    fieldsToUpdate.push(`email = $${values.length}`);
   }
   if (password !== undefined && password !== null) {
-    fieldsToUpdate.push(`password_hash = $${values.length + 1}`);
     values.push(password);
+    fieldsToUpdate.push(`password_hash = $${values.length}`);
   }
-  if (city !== undefined && city !== null) {
-    fieldsToUpdate.push(`city = $${values.length + 1}`);
-    values.push(city);
+  if (longitude !== undefined && longitude !== null) {
+    values.push(longitude);
+    fieldsToUpdate.push(`longitude = $${values.length}`);
   }
-  if (searchRadiusKm !== undefined && searchRadiusKm !== null) {
-    fieldsToUpdate.push(`search_radius_km = $${values.length + 1}`);
-    values.push(searchRadiusKm);
+  if (latitude !== undefined && latitude !== null) {
+    values.push(latitude);
+    fieldsToUpdate.push(`latitude = $${values.length}`);
+  }
+  if (user_address !== undefined && user_address !== null) {
+    values.push(user_address);
+    fieldsToUpdate.push(`user_address = $${values.length}`);
+  }
+  if (search_radius_km !== undefined && search_radius_km !== null) {
+    values.push(search_radius_km);
+    fieldsToUpdate.push(`search_radius_km = $${values.length}`);
   }
 
   if (fieldsToUpdate.length === 0) {
     throw new Error("No fields to update");
   }
 
-  const query = `UPDATE user SET ${fieldsToUpdate.join(
-    ", ",
-  )} WHERE id = $${values.length + 1}`;
   values.push(id);
+  const query = `UPDATE "user" SET ${fieldsToUpdate.join(
+    ", ",
+  )} WHERE id = $${values.length}`;
 
   await SQLClient.query(query, values);
 };
 
 export const deleteUser = async (SQLClient, { id }) => {
-  const { rowCount } = await SQLClient.query("DELETE FROM user WHERE id = $1", [
-    id,
-  ]);
+  const { rowCount } = await SQLClient.query(
+    `DELETE FROM "user" WHERE id = $1`,
+    [id],
+  );
   return rowCount > 0;
 };
 
-export const checkIfUserExist = async (SQLClient, { pseudo, email }) => {
+export const checkIfUserExist = async (SQLClient, { email }) => {
   const { rows } = await SQLClient.query(
-    "SELECT * FROM user WHERE pseudo = $1 OR email = $2",
-    [pseudo, email],
+    `SELECT * FROM "user" WHERE email = $1`,
+    [email],
   );
   return rows.length > 0;
 };
