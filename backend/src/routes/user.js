@@ -14,9 +14,14 @@ import { validate } from "../middlewares/validations/validate.js";
 
 const router = Router();
 
-router.get("/:id", validate(idUserValidator), getUser);
-router.post("/", validate(createUserValidator), addUser);
-router.patch("/:id", validate(patchUserValidator), patchUser);
-router.delete("/:id", validate(idUserValidator), deleteUser);
+router.get("/:id", validate(idUserValidator, "params"), getUser);
+router.post("/", validate(createUserValidator, "body"), addUser);
+router.patch(
+  "/:id",
+  validate(idUserValidator),
+  validate(patchUserValidator, "body"),
+  patchUser,
+);
+router.delete("/:id", validate(idUserValidator, "params"), deleteUser);
 
 export default router;
