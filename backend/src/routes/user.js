@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  login,
   getUser,
   addUser,
   patchUser,
@@ -7,12 +8,14 @@ import {
 } from "../controllers/user.js";
 import { createUserValidator, patchUserValidator } from "../validators/user.js";
 import { idValidator } from "../validators/id.js";
+import { loginValidator } from "../validators/login.js";
 import { validate } from "../middlewares/validations/validate.js";
 
 const router = Router();
 
 router.get("/:id", validate(idValidator, "params"), getUser);
 router.post("/", validate(createUserValidator, "body"), addUser);
+router.get("/login", validate(loginValidator, "body"), login);
 router.patch(
   "/:id",
   validate(idValidator),
