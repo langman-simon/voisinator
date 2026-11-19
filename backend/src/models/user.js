@@ -13,21 +13,20 @@ export const createUser = async (
     search_radius_km,
   },
 ) => {
-  await SQLClient.query(
-    `INSERT INTO "user"
-      (
-        role_id,
-        pseudo,
-        first_name,
-        name,
-        email,
-        password_hash,
-        longitude,
-        latitude,
-        user_address,
-        search_radius_km
-      )
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+  const { rows } = await SQLClient.query(
+    `INSERT INTO "user" (
+      role_id,
+      pseudo,
+      first_name,
+      name,
+      email,
+      password_hash,
+      longitude,
+      latitude,
+      user_address,
+      search_radius_km
+    )
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
     [
       role_id,
       pseudo,
@@ -41,6 +40,7 @@ export const createUser = async (
       search_radius_km,
     ],
   );
+  return rows[0];
 };
 
 export const readUserById = async (SQLClient, { id }) => {
@@ -57,11 +57,32 @@ export const readUserById = async (SQLClient, { id }) => {
       user_address,
       search_radius_km,
       created_at
-     FROM "user"
-     WHERE id = $1`,
+    FROM "user"
+    WHERE id = $1`,
     [id],
   );
+  return rows[0];
+};
 
+export const readUserByEmail = async (SQLClient, { email }) => {
+  const { rows } = await SQLClient.query(
+    `SELECT
+      id,
+      role_id,
+      pseudo,
+      first_name,
+      name,
+      email
+      password_hash,
+      longitude,
+      latitude,
+      user_address,
+      search_radius_km,
+      created_at
+    FROM "user"
+    WHERE email = $1`,
+    [email],
+  );
   return rows[0];
 };
 
@@ -80,52 +101,28 @@ export const updateUser = async (
     search_radius_km,
   },
 ) => {
+  const fields = {
+    role_id,
+    pseudo,
+    first_name,
+    name,
+    password_hash: password,
+    longitude,
+    latitude,
+    user_address,
+    search_radius_km,
+  };
+
   const fieldsToUpdate = [];
   const values = [];
 
-  if (role_id !== undefined && role_id !== null) {
-    values.push(role_id);
-    fieldsToUpdate.push(`role_id = $${values.length}`);
-  }
-
-  if (pseudo !== undefined && pseudo !== null) {
-    values.push(pseudo);
-    fieldsToUpdate.push(`pseudo = $${values.length}`);
-  }
-
-  if (first_name !== undefined && first_name !== null) {
-    values.push(first_name);
-    fieldsToUpdate.push(`first_name = $${values.length}`);
-  }
-
-  if (name !== undefined && name !== null) {
-    values.push(name);
-    fieldsToUpdate.push(`name = $${values.length}`);
-  }
-
-  if (password !== undefined && password !== null) {
-    values.push(password);
-    fieldsToUpdate.push(`password_hash = $${values.length}`);
-  }
-
-  if (longitude !== undefined && longitude !== null) {
-    values.push(longitude);
-    fieldsToUpdate.push(`longitude = $${values.length}`);
-  }
-
-  if (latitude !== undefined && latitude !== null) {
-    values.push(latitude);
-    fieldsToUpdate.push(`latitude = $${values.length}`);
-  }
-
-  if (user_address !== undefined && user_address !== null) {
-    values.push(user_address);
-    fieldsToUpdate.push(`user_address = $${values.length}`);
-  }
-
-  if (search_radius_km !== undefined && search_radius_km !== null) {
-    values.push(search_radius_km);
-    fieldsToUpdate.push(`search_radius_km = $${values.length}`);
+  for (const [column, value] of Object.entries(fields)) {
+    // Object.entries() create a [key, value] array for each property in the object.
+    // here pseudo become [pseudo : undefined] if not provided.
+    if (value !== undefined && value !== null) {
+      values.push(value);
+      fieldsToUpdate.push(`${column} = $${values.length}`);
+    }
   }
 
   if (fieldsToUpdate.length === 0) {
@@ -134,13 +131,13 @@ export const updateUser = async (
 
   values.push(id);
 
-  const query = `
-    UPDATE "user"
-    SET ${fieldsToUpdate.join(", ")}
-    WHERE id = $${values.length}
-  `;
-
-  await SQLClient.query(query, values);
+  const { rows } = await SQLClient.query(
+    `UPDATE "user"
+     SET ${fieldsToUpdate.join(", ")}
+     WHERE id = $${values.length}`,
+    values,
+  );
+  return rows[0];
 };
 
 export const deleteUser = async (SQLClient, { id }) => {
@@ -155,30 +152,26 @@ export const deleteUser = async (SQLClient, { id }) => {
 
 export const checkIfUserExistByEmail = async (SQLClient, { email }) => {
   const { rows } = await SQLClient.query(
-    `SELECT 1
-     FROM "user"
-     WHERE email = $1`,
+    `SELECT EXISTS(
+      SELECT 1
+      FROM "user"
+      WHERE email = $1
+    ) AS exists`,
     [email],
   );
 
-  return rows.length > 0;
+  return rows[0].exists;
 };
 
 export const checkIfUserExistById = async (SQLClient, { id }) => {
   const { rows } = await SQLClient.query(
-    `SELECT 1
-     FROM "user"
-     WHERE id = $1`,
+    `SELECT EXISTS(
+      SELECT 1
+      FROM "user"
+      WHERE id = $1
+    ) AS exists`,
     [id],
   );
 
-  return rows.length > 0;
-};
-
-export const returnHashedPasswordByUserEmail = async (SQLClient, { email }) => {
-  const { rows } = await SQLClient.query(
-    `SELECT password_hash FROM "user" WHERE email = $1`,
-    [email],
-  );
-  return rows[0];
+  return rows[0].exists;
 };
