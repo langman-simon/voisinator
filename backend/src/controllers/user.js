@@ -49,7 +49,7 @@ const login = async (req, res) => {
   }
 };
 
-const addUser = async (req, res) => {
+const register = async (req, res) => {
   try {
     const {
       role_id,
@@ -209,4 +209,4 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { login, addUser, getUser, patchUser, deleteUser };
+export { login, register, getUser, patchUser, deleteUser };
