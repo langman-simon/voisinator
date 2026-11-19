@@ -35,4 +35,4 @@ const patchUserValidator = vine.create({
   search_radius_km: vine.number().min(1).max(30),
 });
 
-export { createUserValidator, patchUserValidator, idUserValidator };
+export { createUserValidator, patchUserValidator };
