@@ -1,6 +1,42 @@
 import * as userModel from "../models/user.js";
 import { pool } from "../database/db.js";
-import { hashPassword } from "../services/password.js";
+import { hashPassword, verifyPassword } from "../services/password.js";
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.val;
+    const userExists = await userModel.checkIfUserExistByEmail(pool, {
+      email,
+    });
+    if (!userExists) {
+      return res.status(404).json({
+        message: "User Not Found",
+      });
+    } else {
+      const { password_hash } = await userModel.returnHashedPasswordByUserEmail(
+        pool,
+        {
+          email,
+        },
+      );
+      const isValid = await verifyPassword(password_hash, password);
+      if (!isValid) {
+        return res.status(401).json({
+          message: "passwords don't match",
+        });
+      } else {
+        return res.status(200).json({
+          message: "Success login",
+        });
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
 
 const addUser = async (req, res) => {
   try {
@@ -160,4 +196,4 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { addUser, getUser, patchUser, deleteUser };
+export { login, addUser, getUser, patchUser, deleteUser };
