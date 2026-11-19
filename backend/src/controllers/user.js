@@ -5,31 +5,25 @@ import { hashPassword, verifyPassword } from "../services/password.js";
 const login = async (req, res) => {
   try {
     const { email, password } = req.val;
-    const userExists = await userModel.checkIfUserExistByEmail(pool, {
+    const user = await userModel.readUserByEmail(pool, {
       email,
     });
-    if (!userExists) {
-      return res.status(404).json({
-        message: "User Not Found",
+    if (!user) {
+      return res.status(401).json({
+        message: "Invalid credentials",
       });
-    } else {
-      const { password_hash } = await userModel.returnHashedPasswordByUserEmail(
-        pool,
-        {
-          email,
-        },
-      );
-      const isValid = await verifyPassword(password_hash, password);
-      if (!isValid) {
-        return res.status(401).json({
-          message: "passwords don't match",
-        });
-      } else {
-        return res.status(200).json({
-          message: "Success login",
-        });
-      }
     }
+    const { password_hash } = user;
+    const isValid = await verifyPassword(password_hash, password);
+    if (!isValid) {
+      return res.status(401).json({
+        message: "Invalid credentials",
+      });
+    }
+    req.session = email;
+    return res.status(200).json({
+      message: "Success login",
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
@@ -129,11 +123,13 @@ const patchUser = async (req, res) => {
 
     let { password } = req.val;
 
-    const userExists = await userModel.checkIfUserExistById(pool, {
-      id,
+    const { email } = req.session;
+
+    const user = await userModel.readUserByEmail(pool, {
+      email,
     });
 
-    if (!userExists) {
+    if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
@@ -170,18 +166,19 @@ const patchUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const { id } = req.val;
+    const { email } = req.session;
 
-    const userExists = await userModel.checkIfUserExistById(pool, {
-      id,
+    const user = await userModel.readUserByEmail(pool, {
+      email,
     });
 
-    if (!userExists) {
+    if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
     }
 
+    const { id } = user;
     await userModel.deleteUser(pool, { id });
 
     return res.status(200).json({
@@ -189,7 +186,6 @@ const deleteUser = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-
     return res.status(500).json({
       message: "Internal server error",
     });
