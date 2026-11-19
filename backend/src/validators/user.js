@@ -9,8 +9,8 @@ const createUserValidator = vine.create({
   password: vine
     .string()
     .trim()
-    .minLength(8)
-    .maxLength(255)
+    .minLength(7)
+    .maxLength(18)
     .confirmed({ as: "password_confirmation" }),
   longitude: vine.number().range([-180, 180]),
   latitude: vine.number().range([-90, 90]),
