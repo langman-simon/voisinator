@@ -1,21 +1,35 @@
 import * as userModel from "../models/user.js";
 import { pool } from "../database/db.js";
+import { hashPassword } from "../services/password.js";
 
 const addUser = async (req, res) => {
-  const {
-    role_id,
-    pseudo,
-    first_name,
-    name,
-    email,
-    password,
-    latitude,
-    longitude,
-    user_address,
-    search_radius_km,
-  } = req.val;
-
   try {
+    const {
+      role_id,
+      pseudo,
+      first_name,
+      name,
+      email,
+      latitude,
+      longitude,
+      user_address,
+      search_radius_km,
+    } = req.val;
+
+    let { password } = req.val;
+
+    const userExists = await userModel.checkIfUserExistByEmail(pool, {
+      email,
+    });
+
+    if (userExists) {
+      return res.status(409).json({
+        message: "User already exists",
+      });
+    }
+
+    password = await hashPassword(password);
+
     await userModel.createUser(pool, {
       role_id,
       pseudo,
@@ -28,83 +42,121 @@ const addUser = async (req, res) => {
       user_address,
       search_radius_km,
     });
-    return res.status(201);
+
+    return res.status(201).json({
+      message: "User added successfully",
+    });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Internal server error" });
+
+    return res.status(500).json({
+      message: "Internal server error",
+    });
   }
 };
 
 const getUser = async (req, res) => {
-  const { id } = req.val.id;
   try {
+    const { id } = req.val;
+
     const user = await userModel.readUserById(pool, { id });
+
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({
+        message: "User not found",
+      });
     }
+
     return res.status(200).json(user);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Internal server error" });
+
+    return res.status(500).json({
+      message: "Internal server error",
+    });
   }
 };
 
 const patchUser = async (req, res) => {
-  const { id } = req.val.id;
-  const {
-    role_id,
-    pseudo,
-    first_name,
-    name,
-    email,
-    password,
-    latitude,
-    longitude,
-    user_address,
-    search_radius_km,
-  } = req.val;
-
   try {
-    const userExists = await userModel.checkIfUserExist(pool, {
+    const {
+      id,
+      role_id,
+      pseudo,
+      first_name,
+      name,
+      latitude,
+      longitude,
+      user_address,
+      search_radius_km,
+    } = req.val;
+
+    let { password } = req.val;
+
+    const userExists = await userModel.checkIfUserExistById(pool, {
       id,
     });
+
     if (!userExists) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({
+        message: "User not found",
+      });
     }
+
+    if (password !== undefined && password !== null) {
+      password = await hashPassword(password);
+    }
+
     await userModel.updateUser(pool, {
       id,
       role_id,
       pseudo,
       first_name,
       name,
-      email,
       password,
       latitude,
       longitude,
       user_address,
       search_radius_km,
     });
-    return res.status(200).json({ message: "User updated successfully" });
+
+    return res.status(200).json({
+      message: "User updated successfully",
+    });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Internal server error" });
+
+    return res.status(500).json({
+      message: "Internal server error",
+    });
   }
 };
 
 const deleteUser = async (req, res) => {
-  const { id } = req.val.id;
   try {
-    const userExists = await userModel.checkIfUserExist(pool, {
+    const { id } = req.val;
+
+    const userExists = await userModel.checkIfUserExistById(pool, {
       id,
     });
+
     if (!userExists) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({
+        message: "User not found",
+      });
     }
+
     await userModel.deleteUser(pool, { id });
-    return res.status(200).json({ message: "User deleted successfully" });
+
+    return res.status(200).json({
+      message: "User deleted successfully",
+    });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Internal server error" });
+
+    return res.status(500).json({
+      message: "Internal server error",
+    });
   }
 };
 

@@ -15,10 +15,10 @@ router.get("/:id", validate(idValidator, "params"), getUser);
 router.post("/", validate(createUserValidator, "body"), addUser);
 router.patch(
   "/:id",
-  validate(idUserValidator),
+  validate(idValidator),
   validate(patchUserValidator, "body"),
   patchUser,
 );
-router.delete("/:id", validate(idUserValidator, "params"), deleteUser);
+router.delete("/:id", validate(idValidator, "params"), deleteUser);
 
 export default router;

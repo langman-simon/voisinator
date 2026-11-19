@@ -23,7 +23,6 @@ const patchUserValidator = vine.create({
   pseudo: vine.string().trim().maxLength(50).ascii(),
   first_name: vine.string().trim().maxLength(50),
   name: vine.string().trim().maxLength(50),
-  email: vine.string().email().maxLength(100),
   password: vine
     .string()
     .trim()
