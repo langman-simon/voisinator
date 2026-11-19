@@ -174,3 +174,11 @@ export const checkIfUserExistById = async (SQLClient, { id }) => {
 
   return rows.length > 0;
 };
+
+export const returnHashedPasswordByUserEmail = async (SQLClient, { email }) => {
+  const { rows } = await SQLClient.query(
+    `SELECT password_hash FROM "user" WHERE email = $1`,
+    [email],
+  );
+  return rows[0];
+};
