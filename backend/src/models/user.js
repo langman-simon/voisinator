@@ -117,8 +117,6 @@ export const updateUser = async (
   const values = [];
 
   for (const [column, value] of Object.entries(fields)) {
-    // Object.entries() create a [key, value] array for each property in the object.
-    // here pseudo become [pseudo : undefined] if not provided.
     if (value !== undefined && value !== null) {
       values.push(value);
       fieldsToUpdate.push(`${column} = $${values.length}`);
@@ -133,8 +131,8 @@ export const updateUser = async (
 
   const { rows } = await SQLClient.query(
     `UPDATE "user"
-     SET ${fieldsToUpdate.join(", ")}
-     WHERE id = $${values.length}`,
+    SET ${fieldsToUpdate.join(", ")}
+    WHERE id = $${values.length}`,
     values,
   );
   return rows[0];
@@ -143,7 +141,7 @@ export const updateUser = async (
 export const deleteUser = async (SQLClient, { id }) => {
   const { rowCount } = await SQLClient.query(
     `DELETE FROM "user"
-     WHERE id = $1`,
+    WHERE id = $1`,
     [id],
   );
 
