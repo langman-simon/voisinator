@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   login,
   getUser,
-  addUser,
+  register,
   patchUser,
   deleteUser,
 } from "../controllers/user.js";
@@ -14,7 +14,7 @@ import { validate } from "../middlewares/validations/validate.js";
 const router = Router();
 
 router.get("/:id", validate(idValidator, "params"), getUser);
-router.post("/", validate(createUserValidator, "body"), addUser);
+router.post("/", validate(createUserValidator, "body"), register);
 router.get("/login", validate(loginValidator, "body"), login);
 router.patch(
   "/:id",
