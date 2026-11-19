@@ -1,31 +1,48 @@
 import * as userModel from "../models/user.js";
 import { pool } from "../database/db.js";
 import { hashPassword, verifyPassword } from "../services/password.js";
+import jwt from "jsonwebtoken";
 
 const login = async (req, res) => {
   try {
     const { email, password } = req.val;
+
     const user = await userModel.readUserByEmail(pool, {
       email,
     });
+
     if (!user) {
       return res.status(401).json({
         message: "Invalid credentials",
       });
     }
-    const { password_hash } = user;
-    const isValid = await verifyPassword(password_hash, password);
+
+    const isValid = await verifyPassword(user.password_hash, password);
+
     if (!isValid) {
       return res.status(401).json({
         message: "Invalid credentials",
       });
     }
-    req.session = email;
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        pseudo: user.pseudo,
+        email: user.email,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      },
+    );
+
     return res.status(200).json({
-      message: "Success login",
+      token,
     });
   } catch (error) {
     console.error(error);
+
     return res.status(500).json({
       message: "Internal server error",
     });
