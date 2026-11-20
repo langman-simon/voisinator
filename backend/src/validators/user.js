@@ -3,13 +3,13 @@ import vine from "@vinejs/vine";
 const createUserValidator = vine.create({
   role_id: vine.number().withoutDecimals().positive(),
   pseudo: vine.string().trim().maxLength(50).ascii(),
-  first_name: vine.string().trim().maxLength(50),
-  name: vine.string().trim().maxLength(50),
+  first_name: vine.string().trim().maxLength(50).ascii(),
+  name: vine.string().trim().maxLength(50).ascii(),
   email: vine.string().email().maxLength(100),
   password: vine
     .string()
     .trim()
-    .minLength(7)
+    .minLength(1)
     .maxLength(18)
     .confirmed({ as: "password_confirmation" }),
   longitude: vine.number().range([-180, 180]),
@@ -21,12 +21,12 @@ const createUserValidator = vine.create({
 const patchUserValidator = vine.create({
   role_id: vine.number().withoutDecimals().positive(),
   pseudo: vine.string().trim().maxLength(50).ascii(),
-  first_name: vine.string().trim().maxLength(50),
-  name: vine.string().trim().maxLength(50),
+  first_name: vine.string().trim().maxLength(50).ascii(),
+  name: vine.string().trim().maxLength(50).ascii(),
   password: vine
     .string()
     .trim()
-    .minLength(8)
+    .minLength(1)
     .maxLength(255)
     .confirmed({ as: "password_confirmation" }),
   longitude: vine.number().range([-180, 180]),
