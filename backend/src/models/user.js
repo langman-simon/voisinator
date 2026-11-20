@@ -72,7 +72,7 @@ export const readUserByEmail = async (SQLClient, { email }) => {
       pseudo,
       first_name,
       name,
-      email
+      email,
       password_hash,
       longitude,
       latitude,
