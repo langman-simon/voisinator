@@ -11,6 +11,7 @@ import { idValidator } from "../validators/id.js";
 import { loginValidator } from "../validators/login.js";
 import { validate } from "../middlewares/validations/validate.js";
 import { checkJWT } from "../middlewares/authentication/checkJWT.js";
+import { checkRole } from "../middlewares/authorization//checkRole.js";
 
 const router = Router();
 
@@ -20,6 +21,7 @@ router.get("/:id", checkJWT, validate(idValidator, "params"), getUser);
 router.patch(
   "/:id",
   checkJWT,
+  checkRole,
   validate(idValidator, "params"),
   validate(patchUserValidator, "body"),
   patchUser,
