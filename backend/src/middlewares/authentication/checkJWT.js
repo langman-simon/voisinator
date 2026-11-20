@@ -22,8 +22,7 @@ export const checkJWT = (req, res, next) => {
 
     req.user = decoded;
 
-    console.log("Decoded JWT:", decoded); // Log the decoded token for debugging
-    console.log("Request User:", req.user); // Log the user object attached to the request for debugging
+    console.log("checkJWT checked user : ", req.user);
 
     return next();
   } catch (error) {
