@@ -46,21 +46,24 @@ export const createUser = async (
 export const readUserById = async (SQLClient, { id }) => {
   const { rows } = await SQLClient.query(
     `SELECT
-      id,
-      role_id,
-      pseudo,
-      first_name,
-      name,
-      email,
-      longitude,
-      latitude,
-      user_address,
-      search_radius_km,
-      created_at
-    FROM "user"
-    WHERE id = $1`,
+      u.id,
+      u.role_id,
+      u.pseudo,
+      u.first_name,
+      u.name,
+      u.email,
+      u.longitude,
+      u.latitude,
+      u.user_address,
+      u.search_radius_km,
+      u.created_at,
+      r.label AS role_label
+    FROM "user" AS u
+    JOIN role AS r ON u.role_id = r.id
+    WHERE u.id = $1`,
     [id],
   );
+
   return rows[0];
 };
 

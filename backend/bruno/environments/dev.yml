@@ -3,4 +3,4 @@ variables:
   - name: userPath
     value: http://localhost:3001/user
   - name: aliceToken
-    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicHNldWRvIjoiYWxpY2VfdXNlciIsImVtYWlsIjoiYWxpY2UuYWxiYUBlbWFpbC5jb20iLCJpYXQiOjE3OTUxODI4NzIsImV4cCI6MTc5NTE4NjQ3Mn0.BPz0YGW7yL8T6bx8wgJHJrHEn90Sirdur3QiqYFQl50
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicHNldWRvIjoiYWxpY2VfdXNlciIsImVtYWlsIjoiYWxpY2UuYWxiYUBlbWFpbC5jb20iLCJpYXQiOjE3OTUxODMyMjYsImV4cCI6MTc5NTE4NjgyNn0.PpBxMULo9HtIXsCmKZxoHFAPQQdT2DtjTxcKNuSndbI
