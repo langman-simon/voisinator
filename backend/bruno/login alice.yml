@@ -1,0 +1,28 @@
+info:
+  name: login alice
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{userPath}}/login"
+  body:
+    type: json
+    data: |-
+      {
+        "email": "alice.alba@email.com",
+        "password": "mdp"
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: bru.setEnvVar("aliceToken", res.body.token);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
