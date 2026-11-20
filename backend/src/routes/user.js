@@ -21,9 +21,9 @@ router.get("/:id", checkJWT, validate(idValidator, "params"), getUser);
 router.patch(
   "/:id",
   checkJWT,
-  checkRole,
   validate(idValidator, "params"),
   validate(patchUserValidator, "body"),
+  checkRole,
   patchUser,
 );
 router.delete("/:id", checkJWT, validate(idValidator, "params"), deleteUser);
