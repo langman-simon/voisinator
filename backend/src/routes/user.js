@@ -10,18 +10,20 @@ import { createUserValidator, patchUserValidator } from "../validators/user.js";
 import { idValidator } from "../validators/id.js";
 import { loginValidator } from "../validators/login.js";
 import { validate } from "../middlewares/validations/validate.js";
+import { checkJWT } from "../middlewares/authentication/checkJWT.js";
 
 const router = Router();
 
-router.get("/:id", validate(idValidator, "params"), getUser);
-router.post("/", validate(createUserValidator, "body"), register);
-router.get("/login", validate(loginValidator, "body"), login);
+router.post("/login", validate(loginValidator, "body"), login);
+router.post("/register", validate(createUserValidator, "body"), register);
+router.get("/:id", checkJWT, validate(idValidator, "params"), getUser);
 router.patch(
   "/:id",
-  validate(idValidator),
+  checkJWT,
+  validate(idValidator, "params"),
   validate(patchUserValidator, "body"),
   patchUser,
 );
-router.delete("/:id", validate(idValidator, "params"), deleteUser);
+router.delete("/:id", checkJWT, validate(idValidator, "params"), deleteUser);
 
 export default router;
