@@ -140,7 +140,7 @@ const patchUser = async (req, res) => {
 
     let { password } = req.val;
 
-    const { email } = req.session;
+    const { email } = req.user;
 
     const user = await userModel.readUserByEmail(pool, {
       email,

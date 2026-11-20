@@ -1,0 +1,24 @@
+info:
+  name: patch alice
+  type: http
+  seq: 4
+
+http:
+  method: PATCH
+  url: "{{userPath}}/5"
+  body:
+    type: json
+    data: |-
+      {
+        "pseudo":"alice_pseudo_updated"
+      }
+  auth:
+    type: bearer
+    token: "{{aliceToken}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
