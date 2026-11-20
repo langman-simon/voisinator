@@ -2,4 +2,5 @@ name: dev
 variables:
   - name: userPath
     value: http://localhost:3001/user
-    description: ""
+  - name: aliceToken
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicHNldWRvIjoiYWxpY2VfdXNlciIsImVtYWlsIjoiYWxpY2UuYWxiYUBlbWFpbC5jb20iLCJpYXQiOjE3OTUxODE2MTQsImV4cCI6MTc5NTE4NTIxNH0.o1JYeynCjlsQj9KN3743Kg8x5jt2C_6dIgCpI67EpDA
