@@ -2,5 +2,7 @@ name: dev
 variables:
   - name: userPath
     value: http://localhost:3001/user
+  - name: adminToken
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicHNldWRvIjoiQWRtaW5Qc2V1ZG8iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiaWF0IjoxNzk1NjAxNjA0LCJleHAiOjE3OTU2MDUyMDR9.Sf0jIVvhemqb9kpE3qhmp2LkruqggJnAvi1oOgNnXWA
   - name: aliceToken
-    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicHNldWRvIjoiYWxpY2VfdXNlciIsImVtYWlsIjoiYWxpY2UuYWxiYUBlbWFpbC5jb20iLCJpYXQiOjE3OTUxODMyMjYsImV4cCI6MTc5NTE4NjgyNn0.PpBxMULo9HtIXsCmKZxoHFAPQQdT2DtjTxcKNuSndbI
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicHNldWRvIjoiYWxpY2VfdXNlciIsImVtYWlsIjoiYWxpY2UuYWxiYUBlbWFpbC5jb20iLCJpYXQiOjE3OTU2MDE1NzksImV4cCI6MTc5NTYwNTE3OX0.GYgsHb-boaeuulID1bk8gzCVo4_hGCkF773iVijdW1I

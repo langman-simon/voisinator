@@ -88,7 +88,7 @@ VALUES
         'GuestFirstName',
         'GuestName',
         'guest@example.com',
-        '5f4e5f4e5d',
+        '$argon2id$v=19$m=65536,t=3,p=4$qh4zWN4xlS0vxrRjhrtBCw$hsYPPre3LNA8aOl7QEeTJZSzeJrUYqz2aMXqMjLgCuQ',
         4.8675,
         50.4674,
         'rue du code',
