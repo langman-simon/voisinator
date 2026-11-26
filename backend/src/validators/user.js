@@ -1,7 +1,6 @@
 import vine from "@vinejs/vine";
 
 const createUserValidator = vine.create({
-  role_id: vine.number().withoutDecimals().positive(),
   pseudo: vine.string().trim().maxLength(50).ascii(),
   first_name: vine.string().trim().maxLength(50).ascii(),
   name: vine.string().trim().maxLength(50).ascii(),
@@ -19,7 +18,6 @@ const createUserValidator = vine.create({
 });
 
 const patchUserValidator = vine.create({
-  role_id: vine.number().withoutDecimals().positive().optional(),
   pseudo: vine.string().trim().maxLength(50).ascii().optional(),
   first_name: vine.string().trim().maxLength(50).ascii().optional(),
   name: vine.string().trim().maxLength(50).ascii().optional(),
@@ -36,4 +34,8 @@ const patchUserValidator = vine.create({
   search_radius_km: vine.number().min(1).max(30).optional(),
 });
 
-export { createUserValidator, patchUserValidator };
+const patchRoleByAdminValidator = vine.create({
+  role_id: vine.number().withoutDecimals().positive(),
+});
+
+export { createUserValidator, patchUserValidator, patchRoleByAdminValidator };

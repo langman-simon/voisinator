@@ -52,7 +52,6 @@ const login = async (req, res) => {
 const register = async (req, res) => {
   try {
     const {
-      role_id,
       pseudo,
       first_name,
       name,
@@ -78,7 +77,6 @@ const register = async (req, res) => {
     password = await hashPassword(password);
 
     await userModel.createUser(pool, {
-      role_id,
       pseudo,
       first_name,
       name,
@@ -128,7 +126,6 @@ const patchUser = async (req, res) => {
   try {
     const {
       id,
-      role_id,
       pseudo,
       first_name,
       name,
@@ -158,7 +155,6 @@ const patchUser = async (req, res) => {
 
     await userModel.updateUser(pool, {
       id,
-      role_id,
       pseudo,
       first_name,
       name,
@@ -178,6 +174,25 @@ const patchUser = async (req, res) => {
     return res.status(500).json({
       message: "Internal server error",
     });
+  }
+};
+
+const patchRoleByAdmin = async (req, res) => {
+  try {
+    const { id, role_id } = req.val;
+
+    const user = await userModel.readUserById(pool, { id });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await userModel.updateUser(pool, { role_id });
+
+    return res.status(200).json({ message: "User updated successfully" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -209,4 +224,4 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { login, register, getUser, patchUser, deleteUser };
+export { login, register, getUser, patchUser, deleteUser, patchRoleByAdmin };
