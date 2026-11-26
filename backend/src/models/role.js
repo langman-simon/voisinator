@@ -31,8 +31,9 @@ export const deleteRole = async (SQLClient, id) => {
 };
 
 export const readRoleByLabel = async (SQLClient, label) => {
-  const rows = await SQLClient.query("SELECT id FROM role WHERE label = $1", [
-    label,
-  ]);
+  const { rows } = await SQLClient.query(
+    "SELECT id FROM role WHERE label = $1",
+    [label],
+  );
   return rows[0];
 };

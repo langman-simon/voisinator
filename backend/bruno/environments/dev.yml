@@ -4,3 +4,9 @@ variables:
     value: http://localhost:3001/user
   - name: adminToken
     value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicHNldWRvIjoiQWRtaW5Qc2V1ZG8iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiaWF0IjoxNzk1NjAxNjA0LCJleHAiOjE3OTU2MDUyMDR9.Sf0jIVvhemqb9kpE3qhmp2LkruqggJnAvi1oOgNnXWA
+  - name: aliceToken
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicHNldWRvIjoiYWxpY2VfdXNlciIsImVtYWlsIjoiYWxpY2UuYWxiYUBlbWFpbC5jb20iLCJpYXQiOjE3OTU3MTMxMjYsImV4cCI6MTc5NTcxNjcyNn0.KYjB4GXWlEvToSTWHKtH2dw3WEbVECA1zvvyzciAAzA
+  - name: aliceId
+    value:
+      type: number
+      data: "5"

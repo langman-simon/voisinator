@@ -79,8 +79,6 @@ const register = async (req, res) => {
       return res.status(500).json({ message: "Internal server error" });
     }
 
-    console.log("role in controler : ", role);
-
     const { id } = role;
 
     password = await hashPassword(password);

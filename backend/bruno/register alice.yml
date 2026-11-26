@@ -10,7 +10,6 @@ http:
     type: json
     data: |-
       {
-        "role_id": 1,
         "pseudo": "alice_user",
         "first_name": "alice",
         "name": "alba",
