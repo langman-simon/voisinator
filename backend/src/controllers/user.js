@@ -1,7 +1,9 @@
 import * as userModel from "../models/user.js";
+import { readRoleByLabel } from "../models/role.js";
 import { pool } from "../database/db.js";
 import { hashPassword, verifyPassword } from "../services/password.js";
 import jwt from "jsonwebtoken";
+import { ROLES } from "../constants/roles.js";
 
 const login = async (req, res) => {
   try {
@@ -25,20 +27,19 @@ const login = async (req, res) => {
       });
     }
 
-    const token = jwt.sign(
-      {
-        id: user.id,
-        pseudo: user.pseudo,
-        email: user.email,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
-      },
-    );
+    const payload = {
+      id: user.id,
+      pseudo: user.pseudo,
+      email: user.email,
+    };
+
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
     return res.status(200).json({
       token,
+      user: payload,
     });
   } catch (error) {
     console.error(error);
@@ -69,14 +70,23 @@ const register = async (req, res) => {
     });
 
     if (userExists) {
-      return res.status(409).json({
-        message: "User already exists",
-      });
+      return res.status(409).json({ message: "User already exists" });
     }
+
+    const role = await readRoleByLabel(pool, ROLES.USER);
+
+    if (!role) {
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
+    console.log("role in controler : ", role);
+
+    const { id } = role;
 
     password = await hashPassword(password);
 
     await userModel.createUser(pool, {
+      role_id: id,
       pseudo,
       first_name,
       name,
@@ -88,12 +98,9 @@ const register = async (req, res) => {
       search_radius_km,
     });
 
-    return res.status(201).json({
-      message: "User added successfully",
-    });
+    return res.status(201).json({ message: "User added successfully" });
   } catch (error) {
     console.error(error);
-
     return res.status(500).json({
       message: "Internal server error",
     });
@@ -107,18 +114,12 @@ const getUser = async (req, res) => {
     const user = await userModel.readUserById(pool, { id });
 
     if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-      });
+      return res.status(404).json({ message: "User not found" });
     }
-
     return res.status(200).json(user);
   } catch (error) {
     console.error(error);
-
-    return res.status(500).json({
-      message: "Internal server error",
-    });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 

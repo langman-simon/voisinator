@@ -18,7 +18,9 @@ http:
 runtime:
   scripts:
     - type: after-response
-      code: bru.setEnvVar("aliceToken", res.body.token);
+      code: |-
+        bru.setEnvVar("aliceToken", res.body.token);
+        bru.setEnvVar("aliceId", res.body.user.id)
 
 settings:
   encodeUrl: true

@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: "{{userPath}}/5"
+  url: "{{userPath}}/{{aliceId}}"
   auth:
     type: bearer
     token: "{{aliceToken}}"
