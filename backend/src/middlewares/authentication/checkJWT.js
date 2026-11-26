@@ -16,13 +16,11 @@ export const checkJWT = (req, res, next) => {
       });
     }
 
-    const token = authorization.split(" ")[1]; // split because the format is "Bearer 54644654466"
+    const token = authorization.split(" ")[1];
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); // the format look like this: { id: 'userId', pseudo: 'mypseudo', email: 'user@example.com' }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = decoded;
-
-    console.log("checkJWT checked user : ", req.user);
 
     return next();
   } catch (error) {
