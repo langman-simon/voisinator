@@ -1,5 +1,5 @@
 info:
-  name: login alice
+  name: Login Alice
   type: http
   seq: 2
 
@@ -13,14 +13,40 @@ http:
         "email": "alice.alba@email.com",
         "password": "mdp"
       }
-  auth: inherit
+  auth:
+    type: none
 
 runtime:
   scripts:
     - type: after-response
       code: |-
-        bru.setEnvVar("aliceToken", res.body.token);
-        bru.setEnvVar("aliceId", res.body.user.id)
+        if (res.status === 200) {
+          bru.setEnvVar("aliceToken", res.body.token);
+          bru.setEnvVar("aliceId", res.body.user.id);
+        }
+
+    - type: tests
+      code: |-
+        test("Login successful", () => {
+          expect(res.status).to.equal(200);
+        });
+
+        test("JWT returned", () => {
+          expect(res.body.token).to.be.a("string").and.not.be.empty;
+        });
+
+        test("Correct email returned", () => {
+          expect(res.body.user.email).to.equal("alice.alba@email.com");
+        });
+
+        test("User ID returned", () => {
+          expect(res.body.user.id).to.be.a("number");
+        });
+
+        test("Sensitive information not exposed", () => {
+          expect(res.body.user).not.to.have.property("password_hash");
+          expect(res.body.user).not.to.have.property("password");
+        });
 
 settings:
   encodeUrl: true

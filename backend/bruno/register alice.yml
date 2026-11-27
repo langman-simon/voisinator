@@ -1,5 +1,5 @@
 info:
-  name: register alice
+  name: Register Alice
   type: http
   seq: 1
 
@@ -10,6 +10,7 @@ http:
     type: json
     data: |-
       {
+        "role_id": 2,
         "pseudo": "alice_user",
         "first_name": "alice",
         "name": "alba",
@@ -21,7 +22,20 @@ http:
         "user_address": "Brussels",
         "search_radius_km": 10
       }
-  auth: inherit
+  auth:
+    type: none
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Registration successful", () => {
+          expect(res.status).to.equal(201);
+        });
+
+        test("Success message returned", () => {
+          expect(res.body.message).to.equal("User added successfully");
+        });
 
 settings:
   encodeUrl: true
