@@ -1,13 +1,23 @@
 import { hash, verify } from "argon2";
 
-const hashPassword = (password) => {
+const hashPassword = async (password) => {
   try {
-    const password_hashed = hash(password);
-  } catch (error) {}
+    const hashed = await hash(password);
+    return hashed;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
-const verifyPassword = (password_hash, password) => {
+const verifyPassword = async (password_hash, password) => {
   try {
-    const verifyPassword = verify(password_hash, password);
-  } catch (error) {}
+    const verified = await verify(password_hash, password);
+    return verified;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
+
+export { hashPassword, verifyPassword };

@@ -1,0 +1,32 @@
+info:
+  name: register alice
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{userPath}}/register"
+  body:
+    type: json
+    data: |-
+      {
+        "role_id": 1,
+        "pseudo": "alice_user",
+        "first_name": "alice",
+        "name": "alba",
+        "email": "alice.alba@email.com",
+        "password": "mdp",
+        "password_confirmation": "mdp",
+        "longitude": 4.3517,
+        "latitude": 50.8503,
+        "user_address": "Brussels",
+        "search_radius_km": 10
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

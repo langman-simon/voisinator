@@ -1,16 +1,15 @@
 import vine from "@vinejs/vine";
 
 const createUserValidator = vine.create({
-  role_id: vine.number().withoutDecimals().positive(),
   pseudo: vine.string().trim().maxLength(50).ascii(),
-  first_name: vine.string().trim().maxLength(50),
-  name: vine.string().trim().maxLength(50),
+  first_name: vine.string().trim().maxLength(50).ascii(),
+  name: vine.string().trim().maxLength(50).ascii(),
   email: vine.string().email().maxLength(100),
   password: vine
     .string()
     .trim()
-    .minLength(8)
-    .maxLength(255)
+    .minLength(1)
+    .maxLength(18)
     .confirmed({ as: "password_confirmation" }),
   longitude: vine.number().range([-180, 180]),
   latitude: vine.number().range([-90, 90]),
@@ -19,21 +18,24 @@ const createUserValidator = vine.create({
 });
 
 const patchUserValidator = vine.create({
-  role_id: vine.number().withoutDecimals().positive(),
-  pseudo: vine.string().trim().maxLength(50).ascii(),
-  first_name: vine.string().trim().maxLength(50),
-  name: vine.string().trim().maxLength(50),
-  email: vine.string().email().maxLength(100),
+  pseudo: vine.string().trim().maxLength(50).ascii().optional(),
+  first_name: vine.string().trim().maxLength(50).ascii().optional(),
+  name: vine.string().trim().maxLength(50).ascii().optional(),
   password: vine
     .string()
     .trim()
-    .minLength(8)
+    .minLength(1)
     .maxLength(255)
-    .confirmed({ as: "password_confirmation" }),
-  longitude: vine.number().range([-180, 180]),
-  latitude: vine.number().range([-90, 90]),
-  user_address: vine.string().maxLength(255),
-  search_radius_km: vine.number().min(1).max(30),
+    .confirmed({ as: "password_confirmation" })
+    .optional(),
+  longitude: vine.number().range([-180, 180]).optional(),
+  latitude: vine.number().range([-90, 90]).optional(),
+  user_address: vine.string().maxLength(255).optional(),
+  search_radius_km: vine.number().min(1).max(30).optional(),
 });
 
-export { createUserValidator, patchUserValidator, idUserValidator };
+const patchRoleByAdminValidator = vine.create({
+  role_id: vine.number().withoutDecimals().positive(),
+});
+
+export { createUserValidator, patchUserValidator, patchRoleByAdminValidator };
