@@ -186,7 +186,7 @@ const patchRoleByAdmin = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    await userModel.updateUser(pool, { role_id });
+    await userModel.updateUser(pool, { id, role_id });
 
     return res.status(200).json({ message: "User updated successfully" });
   } catch (error) {
@@ -197,7 +197,7 @@ const patchRoleByAdmin = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const { email } = req.session;
+    const { email } = req.user;
 
     const user = await userModel.readUserByEmail(pool, {
       email,

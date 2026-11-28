@@ -5,6 +5,7 @@ import {
   register,
   patchUser,
   deleteUser,
+  patchRoleByAdmin,
 } from "../controllers/user.js";
 import {
   createUserValidator,
@@ -15,7 +16,7 @@ import { idValidator } from "../validators/id.js";
 import { loginValidator } from "../validators/login.js";
 import { validate } from "../middlewares/validations/validate.js";
 import { checkJWT } from "../middlewares/authentication/checkJWT.js";
-import { checkRole } from "../middlewares/authorization//checkRole.js";
+import { checkRole } from "../middlewares/authorization/checkRole.js";
 import { ROLES } from "../constants/roles.js";
 
 const router = Router();
@@ -43,7 +44,7 @@ router.patch(
   validate(idValidator, "params"),
   validate(patchRoleByAdminValidator, "body"),
   checkRole(ROLES.ADMIN),
-  patchUser,
+  patchRoleByAdmin,
 );
 router.delete(
   "/:id",
